@@ -1,7 +1,7 @@
 # CHAT Cli
 
-[![codecov](https://codecov.io/gh/MarkTLite/WebScraper/branch/main/graph/badge.svg?token=KS779CNL3Z)](https://codecov.io/gh/MarkTLite/WebScraper)
-![Test status](hhttps://github.com/MarkTLite/chat-cli-kafka/actions/workflows/testcov.yml/badge.svg)
+[![codecov](https://codecov.io/gh/MarkTLite/WebScraper/branch/main/graph/badge.svg?token=KS779CNL3Z)](https://app.codecov.io/gh/MarkTLite/chat-cli-kafka)
+![Test status](https://github.com/MarkTLite/chat-cli-kafka/actions/workflows/testcov.yml/badge.svg)
 ![Build Status](https://github.com/MarkTLite/landing-page-react/actions/workflows/heroku_deployer.yaml/badge.svg)
 
 
