@@ -1,7 +1,7 @@
 import argparse
 from confluent_kafka import Producer, Consumer
  
-def parse_cli_args():
+def parse_cli_args(): 
     '''Returns a namespace object formed from parsing Command line arguments''' 
     parse_obj = argparse.ArgumentParser()
     parse_obj.add_argument("command", help="Command", choices=['send', 'receive'])
