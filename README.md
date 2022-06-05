@@ -2,7 +2,7 @@
 
 [![codecov](https://codecov.io/gh/MarkTLite/chat-cli-kafka/branch/main/graph/badge.svg?token=D1GG1EUSJL)](https://codecov.io/gh/MarkTLite/chat-cli-kafka)
 ![Test status](https://github.com/MarkTLite/chat-cli-kafka/actions/workflows/testcov.yml/badge.svg)
-![Build Status](https://github.com/MarkTLite/chat-cli-kafka/actions/workflows/testcov.yml/badge.svg)
+![Build Status](https://github.com/MarkTLite/landing-page-react/actions/workflows/heroku_deployer.yaml/badge.svg)
 
 
 
