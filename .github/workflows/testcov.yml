@@ -1,4 +1,4 @@
-name: tests 
+name: mock_tests 
 
 on: [push, pull_request]
 
@@ -26,7 +26,6 @@ jobs:
         # flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Mock Test with unittest and check test coverage
       run: |        
-        coverage run -m unittest test_app.py
         coverage report
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1 

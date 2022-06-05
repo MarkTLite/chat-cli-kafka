@@ -1,5 +1,5 @@
-import argparse
-from confluent_kafka import Producer, Consumer
+import argparse 
+import confluent_kafka as ck
  
 def parse_cli_args(): 
     '''Returns a namespace object formed from parsing Command line arguments''' 
@@ -8,37 +8,29 @@ def parse_cli_args():
     parse_obj.add_argument('--channel', help="Kafka Topic to work with", required=True)
     parse_obj.add_argument('--server', help="server to work with", required=True)
     parse_obj.add_argument('--group', help="The group id to send messages to", required=False)
-    parse_obj.add_argument('--_from', help="The point to start receiving messages from", 
-                        choices=['start', 'latest'], default='start')
+    parse_obj.add_argument('--_from', help="The point to start receiving messages from", choices=['start', 'latest'], default='start')
+
     args = parse_obj.parse_args()
-    print(args)
+    #print(args)
     return args
 
-def delivery_report(err, msg): 
-        """ For each message produced, indicates delivery result. Is triggered by poll() or flush(). """
-        if err is not None:
-            print('Message delivery error: {}'.format(err))
-        else:
-            print('Message delivered to topic:{} partition:{}'.format(msg.topic(), msg.partition()))
-
 def produce_message(channel, server):
-    '''Produce the message to a given topic using server''' 
-    producer = Producer({'bootstrap.servers': server})    
+    '''Produce the message to a given topic listening on givenserver''' 
+    producer = ck.Producer({'bootstrap.servers': server})    
     message = ''
     print("Chat CLI")
     while message != 'q':        
         message = input("Enter message or 'q' to quit: ")
         if message == 'q':
-            break
-    	
-        producer.produce(channel, message.encode('utf-8'), callback=delivery_report)
-        producer.flush()
-        
+            break 	
+
+        producer.produce(channel, message.encode('utf-8'))
+        producer.flush()  
 
 def consume_message(start_pt,server, channel):
     '''Subscribe to a given kafka topic, listening on server and receive from a given starting point''' 
     offset_config = {'start': 'earliest', 'latest': 'latest'}
-    consumer = Consumer({
+    consumer = ck.Consumer({
         'bootstrap.servers': server,
         'group.id': 'mygroup',
         'default.topic.config': {
@@ -59,7 +51,7 @@ def consume_message(start_pt,server, channel):
                 print(msg.error())
                 break
                 
-            print('Received message: {}'.format(msg.value().decode('utf-8')))
+            print('Received message: {}'.format(msg.value()))
             
     except KeyboardInterrupt:
         pass
