@@ -26,7 +26,7 @@ class TestKafka(unittest.TestCase):
     def setup_poll(self,value):
         pollObj = Mock()
         pollObj.error.return_value = False
-        pollObj.value.return_value = "Value"
+        pollObj.value.side_effect = KeyboardInterrupt
         return pollObj
 
     def setup_consumer_object(self,server):
@@ -36,12 +36,17 @@ class TestKafka(unittest.TestCase):
         consumeObject.close.return_value = "closed consumer"
         return consumeObject
 
+    def mock_inpt(self,text,count):
+        mock_input = Mock()
+        mock_input.return_value = "q" if count > 0 else "er"
+        return mock_input.return_value    
+
     def test_read_args_with_no_arguments(self):
         with self.assertRaises(SystemExit):
             parse_cli_args()
 
     @patch('builtins.print') #test a print
-    @patch('app.argparse')    
+    @patch('app.argparse') 
     def test_add_argument(self,mock_argparse,mock_print):           
         mock_argparse.ArgumentParser.side_effect = self.log_add_argument
         parse_cli_args()        
@@ -54,9 +59,11 @@ class TestKafka(unittest.TestCase):
         assert parse_cli_args()['channel'] == 'test-channel'
 
     @patch('builtins.print')    
-    @patch('app.ck')    
-    def test_Producer(self,mock_producer,mock_produce):
+    @patch('app.ck')
+    @patch('app.get_input')    
+    def test_Producer(self,mock_input,mock_producer,mock_produce):
         mock_producer.Producer.side_effect = self.setup_producer_object       
+        mock_input.side_effect = self.mock_inpt
         app.produce_message('test-topic','test-server')           
         mock_produce.assert_called_with('Chat CLI')
         mock_produce.assert_called()               

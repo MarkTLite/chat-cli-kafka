@@ -1,5 +1,8 @@
 import argparse 
 import confluent_kafka as ck
+
+def get_input(text,count): 
+    return input(text)
  
 def parse_cli_args(): 
     '''Returns a namespace object formed from parsing Command line arguments''' 
@@ -18,9 +21,11 @@ def produce_message(channel, server):
     '''Produce the message to a given topic listening on givenserver''' 
     producer = ck.Producer({'bootstrap.servers': server})    
     message = ''
+    count = 0
     print("Chat CLI")
     while message != 'q':        
-        message = input("Enter message or 'q' to quit: ")
+        message = get_input("Enter message or 'q' to quit: ",count) #count used when mocking input values
+        count+=1
         if message == 'q':
             break 	
 
